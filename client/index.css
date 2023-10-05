@@ -1,0 +1,18 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.list-container {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.details-container {
+  display: flex;
+}
+
+.date-container {
+  display: flex;
+}
