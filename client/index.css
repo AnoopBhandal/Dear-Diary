@@ -11,12 +11,13 @@ html {
 
 body {
   height: 100%;
-  background: #ffffff68;
+  background: #f3f2f2;
 }
 
 #root {
+  display: flex;
+  flex-direction: column;
   height: 100vh;
-  overflow-y: hidden;
   position: relative;
 }
 
@@ -26,11 +27,17 @@ img {
 
 .diary-entry {
   width: 100%;
-  
+  height: 100%;
   display: flex;
+  flex: 1;
+  overflow: auto;
   flex-flow: column nowrap;
   align-items: center;
   margin: 0 auto;
+}
+
+.diary-entry .list-container:first-child {
+  margin-top: 0.5rem;
 }
 
 .list-container {
@@ -43,7 +50,14 @@ img {
   border-radius: 1rem;
   padding: 0.7rem 1rem;
   margin-bottom: 1rem;
+  transition: all 0.2s ease-in;
+  cursor: pointer;
 }
+
+.list-container:hover {
+  transform: scale(1.05);
+}
+
 
 .list-container img {
   margin-right: 0.5rem;
@@ -86,6 +100,11 @@ img {
   margin-block: 2rem;
 }
 
+.filter-date-container > .filter-date {
+  cursor: pointer;
+}
+
+
 .filter-date {
   display: flex;
   justify-content: center;
@@ -94,19 +113,36 @@ img {
   width: 200px;
   border: 1px solid #d81717;
   border-radius: 1rem;
+  transition: all 0.2s ease-in;
+}
+
+.filter-date:hover {
+  background-color: #d81717;
+  color: #fff;
 }
 
 .toolbar-container {
   width: 100%;
-  background-color: #d81717;
-  padding-block: 1rem;
+  position: relative;
+  background-color: #fff;
+  padding-block: 1.6rem;
   display: flex;
   justify-content: space-around;
   position: absolute;
   bottom: 0;
-  
+  z-index: 2;
 }
 
-.toolbar-container div > img  {
+.add-diary {
+  position: absolute;
+  top: -40% !important;
+  background: #fc2d2d;
+  padding: 1.6rem;
+  border-radius: 50%;
+}
+
+.toolbar-container div > img {
   width: 40px;
+  filter: hue-rotate(90deg);
+  cursor: pointer;
 }
