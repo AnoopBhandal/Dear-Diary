@@ -55,7 +55,7 @@ class Diary {
         if (response.rows.length === 0){
             throw new Error("There are no entries for selected ID.")
         }
-        return response
+        return response.rows[0]
     }
 }
 
