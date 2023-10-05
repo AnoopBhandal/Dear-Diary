@@ -1,11 +1,11 @@
 const express = require('express');
 const cors = require('cors');
-const countryRouter = require('./routers/countries');
+const diaryRouter = require('./routers/models');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use('/countries', countryRouter);
+app.use('/diaries', diaryRouter);
 
 module.exports = app;
