@@ -1,10 +1,11 @@
 const db = require("../database/connect")
 
 class Diary {
-    constructor ({entry_id, title, content, date}){
+    constructor ({entry_id, title, content, category, date}){
         this.entry_id = entry_id
         this.title = title
         this.content = content
+        this.category = category
         this.date = date
     }
 

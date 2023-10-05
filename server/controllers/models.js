@@ -42,7 +42,8 @@ async function showDate (req, res){
 
 async function showCategory (req, res){
     try{
-        const category = req.params.category //Needs to be tuned
+        const category = req.query.category //Needs to be tuned
+        console.log(category)
         const entries = await Diary.getByCategory(category);
         res.status(200).json({entries})
     } catch (err){
