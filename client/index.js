@@ -81,7 +81,6 @@ const displayAllData = (data) => {
       console.log(id);
       const res = await fetch(`http://localhost:3000/diaries/${id}`);
       const data = await res.json();
-      console.log(data);
 
       displayModal(data);
     });
@@ -89,21 +88,23 @@ const displayAllData = (data) => {
 };
 
 const displayModal = (data) => {
+  console.log(data.entries.title);
   const modal = document.createElement('div');
-  modal.classList.add('modal');
+  modal.classList.add('new-modal');
   modal.innerHTML = `
-    <div class="modal-content">
-      <h2>${data.title}</h2>
-      <p>${data.content}</p>
-      <p>Date: ${data.date}</p>
-      <!-- Add more data fields here as needed -->
+    <div class="new-modal-content">
+      <h2>${data.entries.title}</h2>
+      <p>${data.entries.content}</p>
+      <p>Date: ${data.entries.date}</p>
     </div>
-    <button class="close-modal">Close</button>
+    <button class="new-close-modal">Close</button>
   `;
 
   document.body.appendChild(modal);
 
-  const closeModal = modal.querySelector('.close-modal');
+  modal.style.display = 'block';
+
+  const closeModal = modal.querySelector('.new-close-modal');
   closeModal.addEventListener('click', () => {
     document.body.removeChild(modal);
   });
