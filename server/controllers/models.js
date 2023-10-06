@@ -86,7 +86,7 @@ async function updateEntry(req, res){
 async function destroy(req, res){
     try{
         const id = parseInt(req.params.id)
-        const entry = await Diary.getByID(id)
+        Diary.destroy(id)
         res.status(204).end()
     } catch(err){
         res.status(200).json({error: err.message})

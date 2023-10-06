@@ -73,8 +73,8 @@ class Diary {
         return new Diary(response.rows[0])
     }
 
-    async destroy(){
-        const response = await db.query("DELETE FROM entries WHERE entry_id = $1 RETURNING title, content;", [this.id])
+    static async destroy(id){
+        const response = await db.query("DELETE FROM entries WHERE entry_id = $1 RETURNING title, content;", [id])
         return new Diary(response.rows[0]);
     }
 
