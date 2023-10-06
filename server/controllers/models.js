@@ -72,12 +72,11 @@ async function create (req, res){
     }
 }
 
-async function update(req, res){
+async function updateEntry(req, res){
     try{
         const data = req.body
         const id = parseInt(req.params.id)
-        const entry = await Diary.getByID(id)
-        const updatedEntry = await entry.update(data)
+        const updatedEntry = await Diary.updateEntry(data, id)
         res.status(201).json(updatedEntry)
     } catch (err){
         res.status(200).json({error: err.message})
@@ -87,7 +86,7 @@ async function update(req, res){
 async function destroy(req, res){
     try{
         const id = parseInt(req.params.id)
-        const entry = await Diary.getByID(id)
+        Diary.destroy(id)
         res.status(204).end()
     } catch(err){
         res.status(200).json({error: err.message})
@@ -97,5 +96,5 @@ async function destroy(req, res){
 
 
 module.exports = {
-    index, showYear, showMonth, showDate, showCategory, showID, create, update, destroy
+    index, showYear, showMonth, showDate, showCategory, showID, create, updateEntry, destroy
 }
