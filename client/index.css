@@ -99,7 +99,7 @@ img {
   justify-content: center;
   gap: 1rem;
   flex-flow: row nowrap;
-  max-width: 100%;
+  max-width: 80%;
   margin: 0 auto;
   margin-block: 2rem;
 }

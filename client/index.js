@@ -2,6 +2,7 @@
 const diary = document.querySelector('.diary-entry');
 const homepage = document.querySelector('.homepage');
 const addDiary = document.querySelector('.add-diary');
+const filterDate = document.querySelector('.filter-date-container');
 
 const modal = document.getElementById('modal');
 const closeButton = document.querySelector('.close');
@@ -28,6 +29,20 @@ const diaryForm = document.getElementById('diary-form');
 // });
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'];
 
+const loopMonths = () => {
+  let html = '';
+
+  for (let i = 0; i < months.length; i++) {
+    html += `<div class="filter-date">
+          <h3>${months[i]}</h3>
+        </div>`;
+  }
+
+  filterDate.innerHTML = html;
+};
+
+loopMonths();
+
 const getApiData = async () => {
   const res = await fetch('http://localhost:3000/diaries');
   const data = await res.json();
@@ -40,7 +55,7 @@ const displayAllData = (data) => {
   const allData = data.map((d) => {
     const timeString = d.date.slice(11, 16);
     const dateString = d.date.slice(0, 10);
-    return `<div class="list-container show">
+    return `<div class="list-container show" data-id=${d.entry_id}>
       <img src=https://cdn-icons-png.flaticon.com/128/3237/3237795.png
       alt="diary"/>
       <div class="details-container">
@@ -58,16 +73,43 @@ const displayAllData = (data) => {
       </div>`;
   });
   diary.innerHTML = allData.join('');
+
+  const listContainers = document.querySelectorAll('.list-container');
+  listContainers.forEach((entry) => {
+    entry.addEventListener('click', async () => {
+      const id = entry.dataset.id;
+      console.log(id);
+      const res = await fetch(`http://localhost:3000/diaries/${id}`);
+      const data = await res.json();
+      console.log(data);
+
+      displayModal(data);
+    });
+  });
+};
+
+const displayModal = (data) => {
+  const modal = document.createElement('div');
+  modal.classList.add('modal');
+  modal.innerHTML = `
+    <div class="modal-content">
+      <h2>${data.title}</h2>
+      <p>${data.content}</p>
+      <p>Date: ${data.date}</p>
+      <!-- Add more data fields here as needed -->
+    </div>
+    <button class="close-modal">Close</button>
+  `;
+
+  document.body.appendChild(modal);
+
+  const closeModal = modal.querySelector('.close-modal');
+  closeModal.addEventListener('click', () => {
+    document.body.removeChild(modal);
+  });
 };
 
 homepage.addEventListener('click', getApiData);
-
-const getOne = async () => {
-  const res = await fetch('http://localhost:3000/diaries/1');
-  const data = await res.json();
-};
-
-getOne();
 
 // Modal Window
 
@@ -93,6 +135,7 @@ diaryForm.addEventListener('submit', async (e) => {
 
   const title = document.getElementById('title').value;
   const content = document.getElementById('content').value;
+  const category = document.getElementById('category').value;
 
   try {
     const res = await fetch('http://localhost:3000/diaries', {
@@ -100,7 +143,7 @@ diaryForm.addEventListener('submit', async (e) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ title, content }),
+      body: JSON.stringify({ title, content, category }),
     });
 
     if (res.ok) {
@@ -113,3 +156,5 @@ diaryForm.addEventListener('submit', async (e) => {
     console.log(e.message);
   }
 });
+
+// display each diary entry
