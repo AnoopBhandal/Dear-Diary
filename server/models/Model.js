@@ -65,8 +65,8 @@ class Diary {
         return new Diary(response)
     }
 
-    async update(data){
-        const response = await db.query("UPDATE entries SET content = $1 WHERE entry_id = $2 RETURNING title, content;", [content, id])
+    static async updateEntry(data, id){
+        const response = await db.query("UPDATE entries SET content = $1 WHERE entry_id = $2 RETURNING title, content;", [data.content, id])
         if (response.rows.length != 1){
             throw new Error("Unable to update entry.")
         }

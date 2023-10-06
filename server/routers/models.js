@@ -9,7 +9,7 @@ diaryRouter.get("/?date", diaryController.showDate)
 diaryRouter.get("/?category", diaryController.showCategory)
 diaryRouter.get("/:id", diaryController.showID)
 diaryRouter.post("/", diaryController.create)
-diaryRouter.patch("/:id", diaryController.update)
+diaryRouter.patch("/:id", diaryController.updateEntry)
 diaryRouter.delete("/:id", diaryController.destroy)
 
 module.exports = diaryRouter;
