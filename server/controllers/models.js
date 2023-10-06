@@ -62,6 +62,40 @@ async function showID (req, res){
 }
 
 
+async function create (req, res){
+    try{
+        const data = req.body
+        const newEntry = await Diary.create(data)
+        res.status(201).json(newEntry)
+    } catch (err){
+        res.status(404).json({error: err.message})
+    }
+}
+
+async function update(req, res){
+    try{
+        const data = req.body
+        const id = parseInt(req.params.id)
+        const entry = await Diary.getByID(id)
+        const updatedEntry = await entry.update(data)
+        res.status(201).json(updatedEntry)
+    } catch (err){
+        res.status(200).json({error: err.message})
+    }
+}
+
+async function destroy(req, res){
+    try{
+        const id = parseInt(req.params.id)
+        const entry = await Diary.getByID(id)
+        res.status(204).end()
+    } catch(err){
+        res.status(200).json({error: err.message})
+    }
+}
+
+
+
 module.exports = {
-    index, showYear, showMonth, showDate, showCategory, showID
+    index, showYear, showMonth, showDate, showCategory, showID, create, update, destroy
 }

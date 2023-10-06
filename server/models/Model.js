@@ -58,6 +58,27 @@ class Diary {
         }
         return response.rows[0]
     }
+
+    static async create(data){
+        const { title, content, category} = data 
+        const response = await db.query("INSERT INTO entries (title, content, category, date) VALUES ($1, $2, $3, CURRENT_TIMESTAMP) RETURNING title, content;", [title, content, category])
+        return new Diary(response)
+    }
+
+    async update(data){
+        const response = await db.query("UPDATE entries SET content = $1 WHERE entry_id = $2 RETURNING title, content;", [content, id])
+        if (response.rows.length != 1){
+            throw new Error("Unable to update entry.")
+        }
+        return new Diary(response.rows[0])
+    }
+
+    async destroy(){
+        const response = await db.query("DELETE FROM entries WHERE entry_id = $1 RETURNING title, content;", [this.id])
+        return new Diary(response.rows[0]);
+    }
+
+
 }
 
 module.exports = Diary;
